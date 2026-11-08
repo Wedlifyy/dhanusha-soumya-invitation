@@ -4,7 +4,7 @@
 
 /* Bump this whenever any file in PRECACHE_ASSETS changes: the fetch
    handler is cache-first, so a stale name serves the previous build. */
-const CACHE_NAME = 'ragahru-wedding-v52';
+const CACHE_NAME = 'ragahru-wedding-v53';
 
 const PRECACHE_ASSETS = [
   './',

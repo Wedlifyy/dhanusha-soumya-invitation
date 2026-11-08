@@ -242,7 +242,7 @@ window.WEDDING = {
               show, in the photo's own pixels), the two names, a tagline.
               theme: "cream" (warm) or "ivory" (cool white).
               ornament: "lotus" | "star" | "cross" | "rings" | "none".        */
-    url:   "https://your-domain.com/",
+    url:   "https://wedlifyy.github.io/dhanusha-soumya-invitation/",
     image: "assets/social/share-preview.jpg",
     title: { en: "Dhanusha MK & Soumya — Wedding Invitation",
              kn: "ಧನುಷ ಎಂ.ಕೆ. & ಸೌಮ್ಯ — ವಿವಾಹ ಆಮಂತ್ರಣ" },
