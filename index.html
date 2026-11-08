@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FDF2DE">
+
+<!-- ==========================================================
+     RH:META — THE LINK PREVIEW.
+
+     What WhatsApp, Facebook, Telegram and iMessage draw when this
+     URL is pasted into a chat. None of those crawlers runs
+     JavaScript, so these have to be plain text in the document —
+     but they are NOT maintained here by hand. Every value below
+     comes from `social` in data/wedding.config.js, and
+
+         node tools/sync-meta.mjs <this folder>
+
+     writes this block and manifest.webmanifest from it. Edit the
+     config, run the script; never edit between the two markers.
+     ========================================================== -->
+<!-- RH:META:START -->
+<title>Dhanusha MK &amp; Soumya — Wedding Invitation</title>
+<meta name="description" content="Together with our families, we invite you to celebrate our wedding. Thursday, 31 December 2026 · Mangala Kalyana Mantapa Lawn">
+<meta name="apple-mobile-web-app-title" content="Dhanusha MK &amp; Soumya — Wedding Invitation">
+<link rel="canonical" href="https://your-domain.com/">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="RagaHru">
+<meta property="og:locale" content="en_IN">
+<meta property="og:locale:alternate" content="kn_IN">
+<meta property="og:url" content="https://your-domain.com/">
+<meta property="og:title" content="Dhanusha MK &amp; Soumya — Wedding Invitation">
+<meta property="og:description" content="Together with our families, we invite you to celebrate our wedding. Thursday, 31 December 2026 · Mangala Kalyana Mantapa Lawn">
+<meta property="og:image" content="https://your-domain.com/assets/social/share-preview.jpg">
+<meta property="og:image:secure_url" content="https://your-domain.com/assets/social/share-preview.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Dhanusha MK &amp; Soumya — Wedding Invitation">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Dhanusha MK &amp; Soumya — Wedding Invitation">
+<meta name="twitter:description" content="Together with our families, we invite you to celebrate our wedding. Thursday, 31 December 2026 · Mangala Kalyana Mantapa Lawn">
+<meta name="twitter:image" content="https://your-domain.com/assets/social/share-preview.jpg">
+<meta name="twitter:image:alt" content="Dhanusha MK &amp; Soumya — Wedding Invitation">
+<!-- RH:META:END -->
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23FDF2DE'/%3E%3Cpath d='M16 7l3 6 6 3-6 3-3 6-3-6-6-3 6-3z' fill='%23A06B24'/%3E%3C/svg%3E">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=EB+Garamond:wght@400;500&family=Great+Vibes&family=Noto+Serif+Kannada:wght@400;500;600&family=Pinyon+Script&display=swap">
+
+<link rel="preload" as="image" href="assets/splash/splash-poster.jpg">
+
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/languages.css">
+</head>
+
+<body>
+
+  <!-- Music sits top-right; language sits bottom-left, out of the
+       artwork. Both appear only once the doors are open. -->
+  <header class="hdr">
+    <div data-c="musicButton"></div>
+  </header>
+
+  <!-- The invitation keeps a card's proportion on every screen. -->
+  <main class="shell">
+    <div data-c="hero"></div>
+    <div data-c="coupleIntro"></div>
+    <div data-c="dateReveal"></div>
+    <div data-c="events"></div>
+    <div data-c="gallery"></div>
+    <div data-c="location"></div>
+    <div data-c="rsvp"></div>
+    <div data-c="blessing"></div>
+    <div data-c="footer"></div>
+  </main>
+
+  <div class="dock">
+    <div data-c="languageSwitch"></div>
+  </div>
+
+  <!-- Full-screen door overlay. -->
+  <div data-c="splash"></div>
+
+  <noscript>
+    <div style="padding:40px 8%;text-align:center;font-family:Georgia,serif;color:#4E2E10">
+      <p>Please turn on JavaScript to open this invitation.</p>
+    </div>
+  </noscript>
+
+  <!-- Content first: both files are pure data and hold every
+       wedding-specific string in the project. -->
+  <script src="data/wedding.config.js"></script>
+  <script src="data/content.i18n.js"></script>
+  <!-- RH:LANGS:START -->
+  <!-- RH:LANGS:END -->
+
+  <script src="js/lib/state.js"></script>
+  <!-- Writes the link-preview tags in the head from the same `social`
+       block the sync tool reads, so the tab and the share sheet follow
+       the language being read. -->
+  <script src="js/lib/meta.js"></script>
+  <script src="js/lib/reveal.js"></script>
+  <script src="js/lib/motion.js"></script>
+  <script src="js/lib/viewer.js"></script>
+  <script src="js/lib/calendar.js"></script>
+
+  <script src="js/components/splash.js"></script>
+  <script src="js/components/music-button.js"></script>
+  <script src="js/components/language-switch.js"></script>
+  <script src="js/components/hero.js"></script>
+  <script src="js/components/couple-intro.js"></script>
+  <script src="js/components/date-reveal.js"></script>
+  <script src="js/components/countdown.js"></script>
+  <script src="js/components/events.js"></script>
+  <script src="js/components/gallery.js"></script>
+  <script src="js/components/location.js"></script>
+  <script src="js/components/rsvp.js"></script>
+  <script src="js/components/blessing.js"></script>
+  <script src="js/components/footer.js"></script>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

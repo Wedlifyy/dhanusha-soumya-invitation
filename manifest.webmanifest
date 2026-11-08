@@ -1,0 +1,24 @@
+{
+  "name": "Dhanusha MK & Soumya — Wedding Invitation",
+  "short_name": "Dhanusha MK & Soumya",
+  "description": "Together with our families, we invite you to celebrate our wedding. Thursday, 31 December 2026 · Mangala Kalyana Mantapa Lawn",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#FDF2DE",
+  "theme_color": "#FDF2DE",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' fill='%23FDF2DE' rx='36'/%3E%3Cpath d='M96 36l20 40 40 20-40 20-20 40-20-40-40-20 40-20z' fill='%23A06B24'/%3E%3C/svg%3E",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' fill='%23FDF2DE' rx='96'/%3E%3Cpath d='M256 96l54 108 108 54-108 54-54 108-54-108-108-54 108-54z' fill='%23A06B24'/%3E%3C/svg%3E",
+      "sizes": "512x512",
+      "type": "image/svg+xml"
+    }
+  ],
+  "lang": "en"
+}

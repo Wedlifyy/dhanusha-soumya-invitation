@@ -1,0 +1,90 @@
+/* =============================================================
+   RagaHru — DESIGN TOKENS
+   Every colour here is sampled from the supplied temple artwork,
+   so the UI and the art are the same material.
+   ============================================================= */
+
+:root {
+  /* ---- Colour (sampled) ---- */
+  --ivory:        #FDF7EC;   /* page surround            */
+  --cream:        #FDF2DE;   /* plate negative space     */
+  --cream-warm:   #FBE9CD;   /* hero cream               */
+  --champagne:    #F3DDB6;   /* soft fill                */
+  --gold:         #A06B24;   /* antique gold, text-safe  */
+  --gold-lit:     #C89246;   /* lit pillar gold          */
+  --gold-pale:    #E3C68C;   /* hairlines                */
+  --ink:          #4E2E10;   /* deep warm text           */
+  --ink-soft:     #7A5326;   /* secondary text           */
+  --ink-faint:    #A08258;   /* tertiary text            */
+  --shadow:       rgba(78, 46, 16, .16);
+
+  /* ---- Type ---- */
+  --display: "Cinzel", "Cormorant Garamond", Georgia, serif;
+  --body:    "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --script:  "Pinyon Script", "Cormorant Garamond", cursive;
+  --kannada: "Noto Serif Kannada", "Nirmala UI", "Tunga", serif;
+  /* A text serif for supporting lines that must be READ rather
+     than admired — a taller x-height and a heavier default colour
+     than the display faces, so 13px stays legible on a phone over
+     moving footage. Used by the hero's invitation and venue. */
+  --support: "EB Garamond", "Cormorant Garamond", Georgia, serif;
+  /* A rounder, warmer hand than the copperplate above, for the one
+     script word in the hero. Kept separate so the couple chapter
+     and the blessing keep the script they were set in. */
+  --script-hero: "Great Vibes", "Pinyon Script", cursive;
+
+  --fs-name:    34px;
+  --fs-amp:     30px;
+  --fs-title:   22px;
+  --fs-lead:    17px;
+  --fs-body:    15px;
+  --fs-small:   13px;
+  --fs-kicker:  11px;
+  --fs-num:     30px;
+
+  --ls-kicker: .30em;
+  --ls-title:  .14em;
+  --ls-name:   .06em;
+
+  /* ---- Layout ---- */
+  --shell-max:   480px;
+  --safe-inset:  17%;    /* keeps content off the carved pillars */
+  --plate-pad:   54px;
+  --plate-y:     28%;    /* default vertical crop of the plate art */
+
+  /* ---- Motion ---- */
+  --ease: cubic-bezier(.22, .61, .36, 1);
+  --dur:  900ms;
+}
+
+@media (max-width: 380px) {
+  :root {
+    --fs-name:  29px;
+    --fs-amp:   26px;
+    --fs-title: 20px;
+    --fs-body:  14px;
+    --fs-num:   26px;
+    --plate-pad: 52px;
+    --safe-inset: 15%;
+  }
+}
+
+/* ---- Kannada mode ----
+   Kannada glyphs carry no case and read badly when tracked out,
+   so uppercase and wide letter-spacing are switched off.         */
+:root.lang-kn {
+  --display: "Noto Serif Kannada", "Cinzel", serif;
+  --body:    "Noto Serif Kannada", "Cormorant Garamond", serif;
+  --script:  "Noto Serif Kannada", serif;
+  --support: "Noto Serif Kannada", "EB Garamond", serif;
+  --fs-name:   27px;
+  --fs-title:  19px;
+  --fs-body:   14px;
+  --fs-small:  12px;
+  --fs-kicker: 12px;   /* Kannada carries no caps to give it weight */
+  --ls-kicker: .10em;
+  --ls-title:  .04em;
+  --ls-name:   .01em;
+}
+
+:root.lang-kn [data-caps] { text-transform: none; }
