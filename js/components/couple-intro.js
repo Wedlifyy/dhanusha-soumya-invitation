@@ -55,7 +55,7 @@
     var view = RH.el(
       '<section class="plate" id="couple">' +
         RH.plateArt(24) +
-        '<div class="plate__inner" data-seq="170">' +
+        '<div class="plate__inner">' +
           /* The thread lies under everything else in the section,
              strung between the two portraits. */
           '<svg class="couple__thread" aria-hidden="true" focusable="false">' +
@@ -71,6 +71,13 @@
           /* where the two lights meet: its own element, so the light
              it gives off is never clipped by the word's reveal */
           '<span class="couple__knot" aria-hidden="true"></span>' +
+          /* the stage: a bloom of light at the centre, and the title
+             that is set under whoever is standing in it */
+          '<span class="couple__halo" aria-hidden="true"></span>' +
+          '<div class="couple__marquee" aria-hidden="true">' +
+            '<p class="couple__marquee-role"></p>' +
+            '<p class="couple__marquee-name"></p>' +
+          '</div>' +
           '<p class="t-kicker" data-caps data-rv="soft" data-i18n="couple.kicker"></p>' +
           RH.ornament(true) +
           person(g, 'is-groom') +
@@ -254,20 +261,152 @@
     RH.onLang(function () { setTimeout(lay, 60); });
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(lay);
 
-    /* The thread is drawn once Weds has landed, which is when the
-       reveal engine marks the word as in. */
-    if (RH.calm) {
+    /* -------------------------------------------------------------
+       THE ENTRANCE — one at a time, centre stage
+
+       The artwork behind never changes; only the two of them move.
+       The groom's portrait comes up large in the middle of the
+       screen, pushing slowly in, and his name is titled under it.
+       Then the portrait travels back to its own place, the title
+       follows it to where the name is set, and his details are
+       written in. Weds lands. The bride does the same, while what
+       is already on the page stands back for her. Only then is the
+       thread drawn between them.
+
+       Reduced motion, or no observer to start it: none of this —
+       the reveal engine has already shown everything, in place.
+       ------------------------------------------------------------- */
+    var cine = !RH.calm && 'IntersectionObserver' in window;
+    if (!cine) {
       view.classList.add('is-bound');
-    } else if ('MutationObserver' in window) {
-      var mo = new MutationObserver(function () {
-        if (!weds.classList.contains('in')) return;
-        mo.disconnect();
-        lay();
-        setTimeout(function () { view.classList.add('is-bound'); }, 500);
-      });
-      mo.observe(weds, { attributes: true, attributeFilter: ['class'] });
-    } else {
-      view.classList.add('is-bound');
+      return;
     }
+
+    /* the reveal engine leaves this section to us */
+    inner.setAttribute('data-rv-manual', '');
+    view.classList.add('is-cine');
+
+    var halo    = view.querySelector('.couple__halo');
+    var marquee = view.querySelector('.couple__marquee');
+    var mRole   = view.querySelector('.couple__marquee-role');
+    var mName   = view.querySelector('.couple__marquee-name');
+
+    function after(ms, fn) { setTimeout(fn, ms); }
+    function show(el, delay) { after(delay || 0, function () { el.classList.add('in'); }); }
+
+    /* where the letters of a line actually sit, not its box: the
+       groom's name is set left and the bride's right */
+    function inkCentre(el, rightAligned) {
+      var c = centre(el);
+      var w = el.offsetWidth;
+      var range = document.createRange();
+      range.selectNodeContents(el);
+      var tw = Math.min(range.getBoundingClientRect().width || w, w);
+      c.x += rightAligned ? (w - tw) / 2 : (tw - w) / 2;
+      return c;
+    }
+
+    function star(box, who, roleKey, done) {
+      var niche  = box.querySelector('.couple__niche');
+      var nameEl = box.querySelector('.couple__name');
+      var isBride = box === brideBox;
+
+      /* the stage is the middle of the screen as it is right now,
+         lifted a little to leave room for the title under it */
+      var w = inner.offsetWidth, h = inner.offsetHeight;
+      var size = Math.min(210, w * 0.52);
+      var cs = size / niche.offsetWidth;
+      var c0 = centre(niche);
+      var cx = w / 2;
+      var cy = window.innerHeight / 2 - inner.getBoundingClientRect().top - 50;
+      /* never up into the heading, never off the foot of the section */
+      var orn = inner.querySelector('.orn');
+      var roof = orn ? orn.offsetTop + orn.offsetHeight + 34 : 96;
+      cy = Math.max(roof + size / 2, Math.min(h - size / 2 - 130, cy));
+
+      niche.style.setProperty('--cx', (cx - c0.x).toFixed(1) + 'px');
+      niche.style.setProperty('--cy', (cy - c0.y).toFixed(1) + 'px');
+      niche.style.setProperty('--cs', cs.toFixed(3));
+
+      halo.style.left = cx.toFixed(1) + 'px';
+      halo.style.top  = cy.toFixed(1) + 'px';
+
+      mRole.textContent = RH.t(roleKey);
+      mName.textContent = RH.L(who.name);
+      marquee.classList.remove('is-on', 'is-off');
+      marquee.style.top = (cy + size / 2 + 30).toFixed(1) + 'px';
+
+      void niche.offsetWidth;            /* start from the stage, not from home */
+      view.classList.add('is-starring');
+      box.classList.add('is-starring');
+      niche.classList.add('is-star', 'in');
+
+      after(520, function () { marquee.classList.add('is-on'); });
+
+      /* ---- and back to their place ---- */
+      after(3100, function () {
+        /* the title travels to where the name is set, shrinking to
+           the size it is set at */
+        var mc = centre(mName);
+        var nc = inkCentre(nameEl, isBride);
+        var ms = parseFloat(getComputedStyle(nameEl).fontSize) /
+                 parseFloat(getComputedStyle(mName).fontSize);
+        marquee.style.transformOrigin =
+          '50% ' + (mName.offsetTop + mName.offsetHeight / 2).toFixed(1) + 'px';
+        marquee.style.setProperty('--mx', (nc.x - mc.x).toFixed(1) + 'px');
+        marquee.style.setProperty('--my', (nc.y - mc.y).toFixed(1) + 'px');
+        marquee.style.setProperty('--ms', ms.toFixed(3));
+        marquee.classList.add('is-off');
+
+        niche.classList.remove('is-star');
+        niche.classList.add('is-home');
+        view.classList.remove('is-starring');
+
+        var lines = box.querySelectorAll('.couple__text [data-rv]');
+        for (var i = 0; i < lines.length; i++) show(lines[i], 620 + i * 150);
+
+        after(1450, function () {
+          box.classList.remove('is-starring');
+          marquee.classList.remove('is-on');
+          done();
+        });
+      });
+    }
+
+    function play() {
+      /* the self-scrolling showcase waits at this section until both
+         of them have been introduced */
+      var cap = RH.scrollCap = Math.round(view.getBoundingClientRect().top + window.scrollY);
+
+      var head = inner.querySelectorAll('.t-kicker, .orn');
+      for (var i = 0; i < head.length; i++) show(head[i], i * 180);
+
+      after(650, function () {
+        star(groomBox, g, 'couple.groom', function () {
+          show(weds, 250);
+          after(1300, function () {
+            star(brideBox, b, 'couple.bride', function () {
+              lay();
+              after(500, function () { view.classList.add('is-bound'); });
+              /* only our own hold: a later section may have set one since */
+              after(2600, function () { if (RH.scrollCap === cap) RH.scrollCap = null; });
+            });
+          });
+        });
+      });
+    }
+
+    var gate = new IntersectionObserver(function (entries) {
+      for (var i = 0; i < entries.length; i++) {
+        if (!entries[i].isIntersecting) continue;
+        gate.disconnect();
+        play();
+        return;
+      }
+    /* Late enough that the stage and the title under it are both on
+       screen wherever the guest stops; scaled down for a section
+       taller than the screen, which could never show that much. */
+    }, { threshold: Math.min(0.78, 0.78 * window.innerHeight / Math.max(1, view.offsetHeight)) });
+    gate.observe(view);
   };
 })();

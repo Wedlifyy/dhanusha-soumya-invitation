@@ -28,7 +28,7 @@ window.CONTENT = {
     "hero.amp": "and",
     "hero.invite1": "Together with our families",
     "hero.invite2": "we invite you to celebrate our wedding",
-    "hero.scroll": "Scroll",
+    "hero.scroll": "Scroll down",
 
     /* Couple */
     "couple.kicker": "With the blessings of our elders",
@@ -50,7 +50,7 @@ window.CONTENT = {
 
     /* Events */
     "events.title": "Celebrations",
-    "events.kicker": "Four days, one blessing",
+    "events.kicker": "Three days, one blessing",
     "events.date": "Date",
     "events.time": "Time",
     "events.venue": "Venue",
@@ -65,6 +65,7 @@ window.CONTENT = {
     "gallery.kicker": "Before the day",
     "gallery.photo": "Photograph",
     "gallery.hint": "Swipe to turn, tap to open",
+    "gallery.hintPrints": "Throw a photograph aside, tap to open",
     "gallery.prev": "Previous photograph",
     "gallery.next": "Next photograph",
     "gallery.close": "Close",
@@ -162,7 +163,7 @@ window.CONTENT = {
 
     /* Events */
     "events.title": "ಶುಭ ಸಮಾರಂಭಗಳು",
-    "events.kicker": "ನಾಲ್ಕು ದಿನ, ಒಂದೇ ಸಂಭ್ರಮ",
+    "events.kicker": "ಮೂರು ದಿನ, ಒಂದೇ ಸಂಭ್ರಮ",
     "events.date": "ದಿನಾಂಕ",
     "events.time": "ಸಮಯ",
     "events.venue": "ಸ್ಥಳ",
@@ -177,6 +178,7 @@ window.CONTENT = {
     "gallery.kicker": "ಆ ದಿನಕ್ಕೂ ಮೊದಲು",
     "gallery.photo": "ಫೋಟೋ",
     "gallery.hint": "ತಿರುಗಿಸಲು ಸ್ವೈಪ್ ಮಾಡಿ, ತೆರೆಯಲು ಸ್ಪರ್ಶಿಸಿ",
+    "gallery.hintPrints": "ಫೋಟೋವನ್ನು ಪಕ್ಕಕ್ಕೆ ಸ್ವೈಪ್ ಮಾಡಿ, ತೆರೆಯಲು ಸ್ಪರ್ಶಿಸಿ",
     "gallery.prev": "ಹಿಂದಿನ ಫೋಟೋ",
     "gallery.next": "ಮುಂದಿನ ಫೋಟೋ",
     "gallery.close": "ಮುಚ್ಚಿ",

@@ -73,12 +73,48 @@
     });
 
     initAutoScroll();
+    initDock();
+  }
+
+  /* -------------------------------------------------------------
+     THE DOCK — full on the hero, folded away further down.
+
+     The language switch is fixed in the bottom corner, where below
+     the hero it sat across whatever was being read: the calendar
+     links, the edge of the map. So once the hero is behind, it
+     folds to a small pill.
+
+     Folded, the pill names the language the page is NOT in — the
+     one a tap will change it to. A page in English shows "ಕನ್ನಡ";
+     tap it and the page is in Kannada and the pill says "English".
+     One word, one tap, no doubt about what it does. (With three or
+     more languages it offers the next one round.)
+     ------------------------------------------------------------- */
+  function initDock() {
+    var dock = document.querySelector('.dock');
+    if (!dock || !dock.querySelector('.lang')) return;
+
+    function offer() {
+      var next = RH.langs[(RH.langs.indexOf(RH.lang()) + 1) % RH.langs.length];
+      dock.querySelectorAll('.lang__btn').forEach(function (b) {
+        b.classList.toggle('is-next', b.getAttribute('data-lang') === next);
+      });
+    }
+
+    function fold() {
+      dock.classList.toggle('is-compact', window.scrollY > window.innerHeight * 0.5);
+    }
+
+    window.addEventListener('scroll', fold, { passive: true });
+    RH.onLang(offer);
+    offer();
+    fold();
   }
 
   /* -------------------------------------------------------------
      AUTO-SCROLL — a single showcase, offered once.
 
-     If a guest does nothing for the first ten seconds after the
+     If a guest does nothing for the first six seconds after the
      doors open, the invitation walks itself down the page and back
      to the top. That happens at most once per visit: the moment
      they touch anything — then, during it, or afterwards — the
@@ -89,7 +125,7 @@
   function initAutoScroll() {
     if (RH.calm) return;
 
-    var IDLE_TIME = 10000;       /* 10s no action */
+    var IDLE_TIME = 6000;        /* 6s no action */
     var PAUSE_AT_BOTTOM = 2000;  /* 2s pause at end */
     var EVENTS = ['touchstart', 'touchmove', 'wheel', 'mousedown', 'keydown', 'pointerdown'];
 
@@ -147,6 +183,17 @@
       }
 
       var nextY = window.scrollY + (0.07 * delta);
+
+      /* A section playing something that must be watched through
+         (the couple's entrance) sets RH.scrollCap to its own top: the
+         showcase walks down to it, waits there, and carries on when
+         the cap is lifted. */
+      if (RH.scrollCap != null && nextY >= RH.scrollCap) {
+        if (window.scrollY < RH.scrollCap) window.scrollTo(0, RH.scrollCap);
+        rafId = requestAnimationFrame(stepDown);
+        return;
+      }
+
       if (nextY >= maxScroll - 4) {
         window.scrollTo(0, maxScroll);
         isAutoScrolling = false;

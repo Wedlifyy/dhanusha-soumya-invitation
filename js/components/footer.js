@@ -13,6 +13,7 @@
     var view = RH.el(
       '<footer class="foot">' +
         '<p class="foot__label" data-caps data-rv="soft" data-i18n="footer.crafted"></p>' +
+        '<img class="foot__logo" data-rv="soft" alt="" width="380" height="385" decoding="async" loading="lazy" hidden>' +
         '<p class="foot__brand" data-rv="ink"></p>' +
         '<a class="foot__ig" data-rv="soft" target="_blank" rel="noopener noreferrer" aria-label="Instagram">' +
           '<svg class="foot__ig-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
@@ -26,6 +27,18 @@
     mount.appendChild(view);
 
     view.querySelector('.foot__brand').textContent = s.studio || 'RagaHru';
+
+    /* The studio's mark carries its name, so where there is a mark the
+       name set in type steps aside. If the picture cannot be had — no
+       file, no signal — the name stays, and nothing is left blank. */
+    var logo = view.querySelector('.foot__logo');
+    if (s.logo) {
+      logo.alt = s.studio || 'RagaHru';
+      logo.onload = function () { view.classList.add('has-logo'); };
+      logo.onerror = function () { logo.hidden = true; view.classList.remove('has-logo'); };
+      logo.hidden = false;
+      logo.src = s.logo;
+    }
 
     var ig = view.querySelector('.foot__ig');
     if (s.instagramUrl) ig.href = s.instagramUrl;

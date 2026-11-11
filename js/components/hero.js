@@ -115,6 +115,7 @@
               '<path class="hero__hand-body" d="M16 13V21C16 22.1 15.1 23 14 23C12.9 23 12 22.1 12 21V15C12 14.2 11.3 13.5 10.5 13.5C9.7 13.5 9 14.2 9 15V22.5C9 26.6 12.4 30 16.5 30C20.6 30 24 26.6 24 22.5V18C24 17.2 23.3 16.5 22.5 16.5C21.7 16.5 21 17.2 21 18V19.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' +
             '</svg>' +
           '</div>' +
+          '<span class="hero__gesture-text" data-caps data-i18n="hero.scroll"></span>' +
         '</div>' +
       '</section>'
     );
@@ -405,11 +406,16 @@
        names lift off ahead of the page. */
     RH.motion.depth(view, [view]);
 
-    /* Hide hand gesture after 3 seconds or on first manual scroll */
+    /* The scroll message: it comes up four seconds after the doors
+       open — once the names have formed — and keeps moving until the
+       page is scrolled, by the guest or by the showcase. Scrolled
+       before then, it is never shown at all. */
+    var GESTURE_AFTER = 4000;
+    var gestureTimer = 0;
     function dismissGesture() {
+      clearTimeout(gestureTimer);
       if (gesture) gesture.classList.add('is-dismissed');
       window.removeEventListener('scroll', dismissGesture);
-      window.removeEventListener('touchstart', dismissGesture);
     }
 
     document.addEventListener('rh:opened', function () {
@@ -423,12 +429,9 @@
       RH.reveal.play(view, BEAT);
       whenFontReady(formDust);
 
-      /* Show hand gesture for exactly 3 seconds, then gently fade out */
       if (gesture) {
-        gesture.classList.add('is-active');
-        setTimeout(dismissGesture, 3000);
+        gestureTimer = setTimeout(function () { gesture.classList.add('is-active'); }, GESTURE_AFTER);
         window.addEventListener('scroll', dismissGesture, { passive: true });
-        window.addEventListener('touchstart', dismissGesture, { passive: true });
       }
     }, { once: true });
   };

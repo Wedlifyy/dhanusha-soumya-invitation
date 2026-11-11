@@ -4,7 +4,7 @@
 
 /* Bump this whenever any file in PRECACHE_ASSETS changes: the fetch
    handler is cache-first, so a stale name serves the previous build. */
-const CACHE_NAME = 'ragahru-wedding-v53';
+const CACHE_NAME = 'ragahru-wedding-v61';
 
 const PRECACHE_ASSETS = [
   './',
@@ -33,6 +33,7 @@ const PRECACHE_ASSETS = [
   'js/components/countdown.js',
   'js/components/events.js',
   'js/components/gallery.js',
+  'js/components/gallery-prints.js',
   'js/components/location.js',
   'js/components/rsvp.js',
   'js/components/blessing.js',
@@ -43,6 +44,7 @@ const PRECACHE_ASSETS = [
   'assets/splash/splash-poster.jpg',
   'assets/hero/hero-poster.jpg',
   'assets/sections/date/indian-temple-background.jpeg',
+  'assets/brand/ragahru-logo.webp',
   'assets/couple/groom-portrait.jpeg',
   'assets/couple/bride-portrait.jpeg',
   'assets/sections/events/mehendi-medallion.jpg',

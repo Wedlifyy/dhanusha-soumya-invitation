@@ -647,6 +647,7 @@
     win.addEventListener('pointerdown', function (e) {
       if (lifted) return;
       if (e.button != null && e.button !== 0) return;
+      standDown();          /* a real finger: the heart is theirs now */
       drag = { id: e.pointerId, x: e.clientX, y: e.clientY, moved: 0, last: null };
       try { win.setPointerCapture(e.pointerId); } catch (err) { /* older engines */ }
       rub(e);
@@ -682,5 +683,82 @@
     /* Reduced motion: the foil is there to be rubbed, but nobody
        should have to work for the date. One press opens it. */
     if (RH.calm) seal.addEventListener('click', lift);
+
+    /* ---------------------------------------------------------
+       LEFT ALONE, IT OPENS ITSELF
+
+       The date is the one thing on this page nobody may miss, and
+       a guest who only watches — or the showcase scrolling the page
+       for them — would pass a closed heart. So: in view and
+       untouched for a moment, the foil is rubbed away by nobody,
+       in the same strokes a finger would make, shedding the same
+       leaf, until it lets go. The showcase is held at this section
+       until the date and the countdown under it have been seen.
+
+       The moment a real finger touches the heart, all of this
+       stands down for good and the heart is the guest's to rub.
+       --------------------------------------------------------- */
+    var WAIT  = 2200;      /* in view, untouched, before it begins   */
+    var RUB   = 1700;      /* how long the strokes take              */
+    var AFTER = 4200;      /* date, hour and countdown, then move on */
+    var selfTimer = 0, selfRaf = 0, selfOff = false, myCap = null;
+
+    function freeScroll() {
+      if (myCap != null && RH.scrollCap === myCap) RH.scrollCap = null;
+      myCap = null;
+    }
+
+    function standDown() {
+      selfOff = true;
+      clearTimeout(selfTimer);
+      if (selfRaf) { cancelAnimationFrame(selfRaf); selfRaf = 0; }
+      /* a finger in the middle of our stroke starts its own line */
+      if (drag && drag.ghost) drag = null;
+      freeScroll();
+    }
+
+    function selfRub() {
+      if (lifted || selfOff) return;
+      if (RH.calm || !ctx || !painted) { lift(); setTimeout(freeScroll, AFTER); return; }
+
+      var t0 = performance.now();
+      drag = { ghost: true, last: null, lastLeaf: null };
+
+      (function stroke(now) {
+        selfRaf = 0;
+        if (selfOff || !drag || !drag.ghost) return;
+        if (lifted) { drag = null; setTimeout(freeScroll, AFTER); return; }
+
+        var t = Math.min(1, (now - t0) / RUB);
+        /* side to side and working down, measured from where the
+           heart is right now — the page may still be moving */
+        var r = win.getBoundingClientRect();
+        var e = t * t * (3 - 2 * t);
+        rub({
+          clientX: r.left + r.width  * (0.5 + Math.sin(e * Math.PI * 6.5) * 0.38),
+          clientY: r.top  + r.height * (0.2 + e * 0.56)
+        });
+
+        if (t < 1) { selfRaf = requestAnimationFrame(stroke); return; }
+        drag = null;
+        lift();                           /* whatever is left lets go */
+        setTimeout(freeScroll, AFTER);
+      })(t0);
+    }
+
+    if ('IntersectionObserver' in window) {
+      WATCH.push(new IntersectionObserver(function (entries) {
+        var seen = entries[entries.length - 1].isIntersecting;
+        if (lifted || selfOff) return;
+        clearTimeout(selfTimer);
+        if (seen) {
+          myCap = RH.scrollCap = Math.round(view.getBoundingClientRect().top + window.scrollY);
+          selfTimer = setTimeout(selfRub, WAIT);
+        } else if (!selfRaf) {
+          freeScroll();
+        }
+      }, { threshold: 0.6 }));
+      WATCH[WATCH.length - 1].observe(view);
+    }
   };
 })();

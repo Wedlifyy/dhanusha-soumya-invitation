@@ -139,6 +139,16 @@ window.WEDDING = {
                jumps as you scroll. Always fill them in.
      Every photo carries its own bilingual caption, shown small
      under the frame beside its number.                            */
+
+  /* WHICH GALLERY the photographs are shown in. Both read the same
+     list below, so switching is this one word and nothing else:
+       "prints" : a pile of printed photographs, dealt onto the page;
+                  throw the top one aside to see the next
+       "ring"   : the original — a turning ring of temple arches
+     To compare without editing: add ?gallery=ring or ?gallery=prints
+     to the page address.                                           */
+  galleryStyle: "prints",
+
   gallery: [
     { src: "assets/sections/gallery/g1-closeup.jpg", w: 292, h: 412,
       caption: { en: "Us, forever.",              kn: "ಎಂದೆಂದಿಗೂ ನಾವು" } },
@@ -229,6 +239,10 @@ window.WEDDING = {
   /* ---------- BRANDING ---------- */
   social: {
     studio:       "RagaHru",
+    /* The studio's mark, shown in the footer in place of the name set
+       in type (the mark carries the name itself). Leave it out and the
+       footer goes back to the name alone. */
+    logo:         "assets/brand/ragahru-logo.webp",
     instagramUrl: "https://instagram.com/ragahru",
 
     /* ---------- LINK PREVIEW ----------

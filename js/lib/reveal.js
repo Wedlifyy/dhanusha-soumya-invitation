@@ -103,6 +103,7 @@
 
       singles.forEach(function (el) {
         if (el.closest('.hero')) return; /* Hero is animated specifically when doors open */
+        if (el.closest('[data-rv-manual]')) return; /* staged by its own component (the couple) */
         if (seen.has(el)) return;
         seen.add(el);
         io.observe(el);
